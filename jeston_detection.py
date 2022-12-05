@@ -5,31 +5,36 @@ from jetson_inference import detectNet
 from jetson_utils import videoSource, videoOutput, logUsage
 
 # parse the command line
-parser = argparse.ArgumentParser(description="Locate objects in a live camera stream using an object detection DNN.", 
-                                 formatter_class=argparse.RawTextHelpFormatter, 
-                                 epilog=detectNet.Usage() + videoSource.Usage() + videoOutput.Usage() + logUsage())
+# parser = argparse.ArgumentParser(description="Locate objects in a live camera stream using an object detection DNN.", 
+#                                  formatter_class=argparse.RawTextHelpFormatter, 
+#                                  epilog=detectNet.Usage() + videoSource.Usage() + videoOutput.Usage() + logUsage())
 
-parser.add_argument("input_URI", type=str, default="", nargs='?', help="URI of the input stream")
-parser.add_argument("output_URI", type=str, default="", nargs='?', help="URI of the output stream")
-parser.add_argument("--network", type=str, default="ssd-mobilenet-v2", help="pre-trained model to load (see below for options)")
-parser.add_argument("--overlay", type=str, default="box,labels,conf", help="detection overlay flags (e.g. --overlay=box,labels,conf)\nvalid combinations are:  'box', 'labels', 'conf', 'none'")
-parser.add_argument("--threshold", type=float, default=0.5, help="minimum detection threshold to use") 
+# parser.add_argument("input_URI", type=str, default="", nargs='?', help="URI of the input stream")
+# parser.add_argument("output_URI", type=str, default="", nargs='?', help="URI of the output stream")
+# parser.add_argument("--network", type=str, default="ssd-mobilenet-v2", help="pre-trained model to load (see below for options)")
+# parser.add_argument("--overlay", type=str, default="box,labels,conf", help="detection overlay flags (e.g. --overlay=box,labels,conf)\nvalid combinations are:  'box', 'labels', 'conf', 'none'")
+# parser.add_argument("--threshold", type=float, default=0.5, help="minimum detection threshold to use") 
 
-is_headless = ["--headless"] if sys.argv[0].find('console.py') != -1 else [""]
+# is_headless = ["--headless"] if sys.argv[0].find('console.py') != -1 else [""]
 
-try:
-	args = parser.parse_known_args()[0]
-except:
-	print("")
-	parser.print_help()
-	sys.exit(0)
+# try:
+# 	args = parser.parse_known_args()[0]
+# except:
+# 	print("")
+# 	parser.print_help()
+# 	sys.exit(0)
+
+# Global variable to set up model
+network = "ssd-mobilenet-v2"
+overlay = "box,labels,conf"
+threshold = 0.5
 
 # create video sources and outputs
-input = videoSource(args.input_URI, argv=sys.argv)
-output = videoOutput(args.output_URI, argv=sys.argv+is_headless)
+input = videoSource(input_URI)
+output = videoOutput(output_URI)
 	
 # load the object detection network
-net = detectNet(args.network, sys.argv, args.threshold)
+net = detectNet(network, threshold)
 
 # note: to hard-code the paths to load a model, the following API can be used:
 #
