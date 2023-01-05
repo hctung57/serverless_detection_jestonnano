@@ -1,6 +1,0 @@
-Đã làm được:
-	1, Container được function
-	2, request được vào container
-	3, sử dụng được gpu trong container
-Chưa làm được:
-	Chạy container bằng câu lệnh docker
