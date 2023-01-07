@@ -19,16 +19,21 @@ def handle_streaming_thread_init(source, time):
             rtmp_streaming_url, time_to_detect,))
         th.start()
     except:
-        print("error when stat thread")
+        print("error when start thread")
     th.join()
     return 'OK', 200
+
+
+@app.route('/api/active', methods=['GET'])
+def active_process():
+    return 'Active', 200
 
 
 @app.route('/api/terminate', methods=['GET'])
 def terminate_process():
     global IS_TERMINATE
     IS_TERMINATE = True
-    os._exit(0) 
+    os._exit(0)
     return
 
 
@@ -54,5 +59,5 @@ def detect_streaming(rtmp_streaming_url: str, time_to_detect: int):
 
 
 if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
     net = detectNet("ssd-mobilenet-v2", threshold=0.5)
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
