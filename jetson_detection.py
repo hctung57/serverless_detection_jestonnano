@@ -24,9 +24,21 @@ def handle_streaming_thread_init(source, time):
     return 'OK', 200
 
 
+@app.route('/api/stream/active/<source>/<int:time>', methods=['GET'])
+def active_streaming_thread_init(source, time):
+    rtmp_streaming_url = source
+    time_to_detect = time
+    try:
+        threading.Thread(target=detect_streaming, args=(
+            rtmp_streaming_url, time_to_detect,))
+    except:
+        print("error when start thread")
+    return 'OK', 200
+
+
 @app.route('/api/active', methods=['GET'])
 def active_process():
-    return 'Active', 200
+    return 'Active process', 200
 
 
 @app.route('/api/terminate', methods=['GET'])
