@@ -7,12 +7,10 @@ ADD data data
 RUN mkdir detection
 
 COPY jetson_detection.py detection
-COPY run.sh detection
-# COPY setup.py detection
 
 WORKDIR detection
 # RUN python3 setup.py
 
 EXPOSE 8080
-CMD ["sh","./run.sh"]
+CMD ["pythone","jetson_detection.py"]
 
