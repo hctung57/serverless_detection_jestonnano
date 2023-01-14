@@ -72,5 +72,5 @@ def detect_streaming(rtmp_streaming_url: str, time_to_detect: int):
 
 if __name__ == '__main__':
     net = detectNet("ssd-mobilenet-v2", threshold=0.5)
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
 
