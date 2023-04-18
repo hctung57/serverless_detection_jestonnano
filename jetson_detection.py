@@ -47,27 +47,7 @@ def terminate_process():
     IS_TERMINATE = True
     os._exit(0)
     return
-
-
-def detect_streaming(rtmp_streaming_url: str, time_to_detect: int):
-    path = f"rtmp://{rtmp_streaming_url}/live/stream"
-    cap = VideoCapture(path)
-    start_time = time.monotonic()
-    frame_number = 0
-    while (True):
-        ret, frame = cap.read()
-        if ret == True:
-            frame_number += 1
-            print("** HANDLE FRAME NUMBER : {}\n***TIMESTAMP: {}".format(
-                frame_number, time.strftime("%Y%m%d-%H%M%S")))
-            cuda_frame = cudaFromNumpy(frame)
-            detections = net.Detect(cuda_frame)
-            for detection in detections:
-                print(detection)
-            if time.monotonic() - start_time > time_to_detect or IS_TERMINATE:
-                break
-    cap.release()
-    return
+0
 
 
 if __name__ == '__main__':
